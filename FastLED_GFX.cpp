@@ -38,7 +38,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-
+#include <FastLED.h>
 #include "FastLED_GFX.h"
 #include "glcdfont.c"
 #ifdef __AVR__
@@ -387,7 +387,7 @@ void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
 // provided bitmap buffer (must be PROGMEM memory) using the specified
 // foreground (for set bits) and background (for clear bits) colors.
 void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
- const uint8_t *bitmap, int16_t w, int16_t h, CRGB color, uint16_t bg) {
+ const uint8_t *bitmap, int16_t w, int16_t h, CRGB color, CRGB bg) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
   uint8_t byte;
@@ -420,7 +420,7 @@ void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
 
 // drawBitmap() variant w/background for RAM-resident (not PROGMEM) bitmaps.
 void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
- uint8_t *bitmap, int16_t w, int16_t h, CRGB color, uint16_t bg) {
+ uint8_t *bitmap, int16_t w, int16_t h, CRGB color, CRGB bg) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
   uint8_t byte;
@@ -510,7 +510,7 @@ void FastLED_GFX::write(uint8_t c) {
 
 // Draw a character
 void FastLED_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
- CRGB color, uint16_t bg, uint8_t size) {
+ CRGB color, CRGB bg, uint8_t size) {
 
   if(!gfxFont) { // 'Classic' built-in font
 
@@ -547,7 +547,7 @@ void FastLED_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
     GFXglyph *glyph  = &(((GFXglyph *)pgm_read_pointer(&gfxFont->glyph))[c]);
     uint8_t  *bitmap = (uint8_t *)pgm_read_pointer(&gfxFont->bitmap);
 
-    uint16_t bo = pgm_read_word(&glyph->bitmapOffset);
+    CRGB bo = pgm_read_word(&glyph->bitmapOffset);
     uint8_t  w  = pgm_read_byte(&glyph->width),
              h  = pgm_read_byte(&glyph->height),
              xa = pgm_read_byte(&glyph->xAdvance);
@@ -615,15 +615,15 @@ void FastLED_GFX::setTextSize(uint8_t s) {
   textsize = (s > 0) ? s : 1;
 }
 
-void FastLED_GFX::setTextColor(uint16_t c) {
+void FastLED_GFX::setTextColor(CRGB c) {
   // For 'transparent' background, we'll set the bg
   // to the same as fg instead of using a flag
   textcolor = textbgcolor = c;
 }
 
-void FastLED_GFX::setTextColor(uint16_t c, uint16_t b) {
+void FastLED_GFX::setTextColor(CRGB c, CRGB bg) {
   textcolor   = c;
-  textbgcolor = b;
+  textbgcolor = bg;
 }
 
 void FastLED_GFX::setTextWrap(boolean w) {
@@ -947,7 +947,7 @@ boolean FastLED_GFX_Button::justReleased() { return (!currstate && laststate); }
 // NOT EXTENSIVELY TESTED YET.  MAY CONTAIN WORST BUGS KNOWN TO HUMANKIND.
 
 GFXcanvas::GFXcanvas(uint16_t w, uint16_t h) : FastLED_GFX(w, h) {
-  struct CRGB p_LED[{w * h)];
+  struct CRGB p_LED[(w * h)];
   m_LED = p_LED;
 }
 
@@ -955,7 +955,7 @@ GFXcanvas::~GFXcanvas(void) {
 }
 
 struct CRGB* GFXcanvas::getBuffer() {
-  return m_LED[0];
+  return (&m_LED[0]);
 }
 
 void GFXcanvas::drawPixel(int16_t x, int16_t y, CRGB color) {

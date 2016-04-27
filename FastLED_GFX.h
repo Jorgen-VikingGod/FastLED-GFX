@@ -63,18 +63,18 @@ class FastLED_GFX : public Print {
     drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
       int16_t w, int16_t h, CRGB color),
     drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
-      int16_t w, int16_t h, CRGB color, uint16_t bg),
+      int16_t w, int16_t h, CRGB color, CRGB bg),
     drawBitmap(int16_t x, int16_t y, uint8_t *bitmap,
       int16_t w, int16_t h, CRGB color),
     drawBitmap(int16_t x, int16_t y, uint8_t *bitmap,
-      int16_t w, int16_t h, CRGB color, uint16_t bg),
+      int16_t w, int16_t h, CRGB color, CRGB bg),
     drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
       int16_t w, int16_t h, CRGB color),
     drawChar(int16_t x, int16_t y, unsigned char c, CRGB color,
-      uint16_t bg, uint8_t size),
+      CRGB bg, uint8_t size),
     setCursor(int16_t x, int16_t y),
-    setTextColor(uint16_t c),
-    setTextColor(uint16_t c, uint16_t bg),
+    setTextColor(CRGB c),
+    setTextColor(CRGB c, CRGB bg),
     setTextSize(uint8_t s),
     setTextWrap(boolean w),
     setRotation(uint8_t r),
@@ -149,7 +149,7 @@ class GFXcanvas : public FastLED_GFX {
   ~GFXcanvas(void);
   void      drawPixel(int16_t x, int16_t y, CRGB color),
             fillScreen(CRGB color);
-  uint16_t *getBuffer(void);
+  struct CRGB *getBuffer(void);
  private:
   struct CRGB *m_LED;
 };
