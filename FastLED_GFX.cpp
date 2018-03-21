@@ -72,8 +72,7 @@ FastLED_GFX::FastLED_GFX(int16_t w, int16_t h):
 }
 
 // Draw a circle outline
-void FastLED_GFX::drawCircle(int16_t x0, int16_t y0, int16_t r,
- CRGB color) {
+void FastLED_GFX::drawCircle(int16_t x0, int16_t y0, int16_t r, CRGB color) {
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;
@@ -106,8 +105,7 @@ void FastLED_GFX::drawCircle(int16_t x0, int16_t y0, int16_t r,
   }
 }
 
-void FastLED_GFX::drawCircleHelper( int16_t x0, int16_t y0,
- int16_t r, uint8_t cornername, CRGB color) {
+void FastLED_GFX::drawCircleHelper( int16_t x0, int16_t y0, int16_t r, uint8_t cornername, CRGB color) {
   int16_t f     = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;
@@ -142,15 +140,13 @@ void FastLED_GFX::drawCircleHelper( int16_t x0, int16_t y0,
   }
 }
 
-void FastLED_GFX::fillCircle(int16_t x0, int16_t y0, int16_t r,
- CRGB color) {
+void FastLED_GFX::fillCircle(int16_t x0, int16_t y0, int16_t r, CRGB color) {
   drawFastVLine(x0, y0-r, 2*r+1, color);
   fillCircleHelper(x0, y0, r, 3, 0, color);
 }
 
 // Used to do circles and roundrects
-void FastLED_GFX::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
- uint8_t cornername, int16_t delta, CRGB color) {
+void FastLED_GFX::fillCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, int16_t delta, CRGB color) {
 
   int16_t f     = 1 - r;
   int16_t ddF_x = 1;
@@ -180,8 +176,7 @@ void FastLED_GFX::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
 }
 
 // Bresenham's algorithm - thx wikpedia
-void FastLED_GFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
- CRGB color) {
+void FastLED_GFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, CRGB color) {
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
     adagfxswap(x0, y0);
@@ -221,28 +216,24 @@ void FastLED_GFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 }
 
 // Draw a rectangle
-void FastLED_GFX::drawRect(int16_t x, int16_t y, int16_t w, int16_t h,
- CRGB color) {
+void FastLED_GFX::drawRect(int16_t x, int16_t y, int16_t w, int16_t h, CRGB color) {
   drawFastHLine(x, y, w, color);
   drawFastHLine(x, y+h-1, w, color);
   drawFastVLine(x, y, h, color);
   drawFastVLine(x+w-1, y, h, color);
 }
 
-void FastLED_GFX::drawFastVLine(int16_t x, int16_t y,
- int16_t h, CRGB color) {
+void FastLED_GFX::drawFastVLine(int16_t x, int16_t y, int16_t h, CRGB color) {
   // Update in subclasses if desired!
   drawLine(x, y, x, y+h-1, color);
 }
 
-void FastLED_GFX::drawFastHLine(int16_t x, int16_t y,
- int16_t w, CRGB color) {
+void FastLED_GFX::drawFastHLine(int16_t x, int16_t y, int16_t w, CRGB color) {
   // Update in subclasses if desired!
   drawLine(x, y, x+w-1, y, color);
 }
 
-void FastLED_GFX::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
- CRGB color) {
+void FastLED_GFX::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, CRGB color) {
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
     drawFastVLine(i, y, h, color);
@@ -254,8 +245,7 @@ void FastLED_GFX::fillScreen(CRGB color) {
 }
 
 // Draw a rounded rectangle
-void FastLED_GFX::drawRoundRect(int16_t x, int16_t y, int16_t w,
- int16_t h, int16_t r, CRGB color) {
+void FastLED_GFX::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, CRGB color) {
   // smarter version
   drawFastHLine(x+r  , y    , w-2*r, color); // Top
   drawFastHLine(x+r  , y+h-1, w-2*r, color); // Bottom
@@ -269,8 +259,7 @@ void FastLED_GFX::drawRoundRect(int16_t x, int16_t y, int16_t w,
 }
 
 // Fill a rounded rectangle
-void FastLED_GFX::fillRoundRect(int16_t x, int16_t y, int16_t w,
- int16_t h, int16_t r, CRGB color) {
+void FastLED_GFX::fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, CRGB color) {
   // smarter version
   fillRect(x+r, y, w-2*r, h, color);
 
@@ -280,19 +269,15 @@ void FastLED_GFX::fillRoundRect(int16_t x, int16_t y, int16_t w,
 }
 
 // Draw a triangle
-void FastLED_GFX::drawTriangle(int16_t x0, int16_t y0,
- int16_t x1, int16_t y1, int16_t x2, int16_t y2, CRGB color) {
+void FastLED_GFX::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, CRGB color) {
   drawLine(x0, y0, x1, y1, color);
   drawLine(x1, y1, x2, y2, color);
   drawLine(x2, y2, x0, y0, color);
 }
 
 // Fill a triangle
-void FastLED_GFX::fillTriangle(int16_t x0, int16_t y0,
- int16_t x1, int16_t y1, int16_t x2, int16_t y2, CRGB color) {
-
+void FastLED_GFX::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, CRGB color) {
   int16_t a, b, y, last;
-
   // Sort coordinates by Y order (y2 >= y1 >= y0)
   if (y0 > y1) {
     adagfxswap(y0, y1); adagfxswap(x0, x1);
@@ -368,9 +353,7 @@ void FastLED_GFX::fillTriangle(int16_t x0, int16_t y0,
 // Draw a 1-bit image (bitmap) at the specified (x,y) position from the
 // provided bitmap buffer (must be PROGMEM memory) using the specified
 // foreground color (unset bits are transparent).
-void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
- const uint8_t *bitmap, int16_t w, int16_t h, CRGB color) {
-
+void FastLED_GFX::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, CRGB color) {
   int16_t i, j, byteWidth = (w + 7) / 8;
   uint8_t byte;
 
@@ -386,9 +369,7 @@ void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
 // Draw a 1-bit image (bitmap) at the specified (zx,y) position from the
 // provided bitmap buffer (must be PROGMEM memory) using the specified
 // foreground (for set bits) and background (for clear bits) colors.
-void FastLED_GFX::drawBitmap(int16_t x, int16_t y,
- const uint8_t *bitmap, int16_t w, int16_t h, CRGB color, CRGB bg) {
-
+void FastLED_GFX::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, CRGB color, CRGB bg) {
   int16_t i, j, byteWidth = (w + 7) / 8;
   uint8_t byte;
 

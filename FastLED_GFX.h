@@ -25,9 +25,7 @@ date:      2016/04/27
 #endif
 
 class FastLED_GFX : public Print {
-
- public:
-
+public:
   FastLED_GFX(int16_t w, int16_t h); // Constructor
 
   // This MUST be defined by the subclass:
@@ -100,7 +98,7 @@ class FastLED_GFX : public Print {
   int16_t getCursorX(void) const;
   int16_t getCursorY(void) const;
 
- protected:
+protected:
   const int16_t
     WIDTH, HEIGHT;   // This is the 'raw' display w/h - never changes
   int16_t
@@ -119,8 +117,7 @@ class FastLED_GFX : public Print {
 };
 
 class FastLED_GFX_Button {
-
- public:
+public:
   FastLED_GFX_Button(void);
   void initButton(FastLED_GFX *gfx, int16_t x, int16_t y,
    uint8_t w, uint8_t h, CRGB outline, CRGB fill,
@@ -133,7 +130,7 @@ class FastLED_GFX_Button {
   boolean justPressed();
   boolean justReleased();
 
- private:
+private:
   FastLED_GFX *_gfx;
   int16_t _x, _y;
   uint16_t _w, _h;
@@ -144,13 +141,14 @@ class FastLED_GFX_Button {
   boolean currstate, laststate;
 };
 
-class GFXcanvas : public FastLED_GFX {
+class GFXcanvas: public FastLED_GFX {
+public:
   GFXcanvas(uint16_t w, uint16_t h);
   ~GFXcanvas(void);
-  void      drawPixel(int16_t x, int16_t y, CRGB color),
-            fillScreen(CRGB color);
+  void drawPixel(int16_t x, int16_t y, CRGB color);
+  void fillScreen(CRGB color);
   struct CRGB *getBuffer(void);
- private:
+private:
   struct CRGB *m_LED;
 };
 
