@@ -18,7 +18,7 @@ date:      2016/04/27
 
 #include "gfxfont.h"
 
-#define adagfxswap(a, b) { int16_t t = a; a = b; b = t; }
+#define adagfxswap(a, b) { a = a ^ b; b = a ^ b; a = a ^ b; }
 
 #if !defined(ESP8266)
   #define swap(a, b) adagfxswap(a, b)
